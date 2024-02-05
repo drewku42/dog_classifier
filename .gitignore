@@ -1,1 +1,5 @@
+# ignore dataset files
 stanford_dogs
+
+# ignore directory paths
+.env
