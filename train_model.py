@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import tensorflow as tf
 from dotenv import load_dotenv
 from keras.applications import MobileNetV2
@@ -21,7 +22,7 @@ def main():
     y_onehot = encoder.encode_to_one_hot(integers)
     X_train, X_test, y_train, y_test = train_test_split(images, y_onehot, test_size=0.2, random_state=42)
 
-    # Define data augmentation
+    # Define data augmentation for training data
     data_augmentation = ImageDataGenerator(
         rotation_range=20,
         width_shift_range=0.2,
@@ -33,6 +34,14 @@ def main():
         preprocessing_function=tf.keras.applications.mobilenet_v2.preprocess_input
     )
 
+    # Prepare the training data generator
+    train_generator = data_augmentation.flow(X_train, y_train, batch_size=32)
+
+    # Prepare the test data generator for consistent preprocessing
+    test_generator = ImageDataGenerator(
+        preprocessing_function=tf.keras.applications.mobilenet_v2.preprocess_input
+    ).flow(X_test, y_test, batch_size=32)
+
     # Define the model
     base_model = MobileNetV2(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
     base_model.trainable = False
@@ -43,19 +52,16 @@ def main():
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     # Train the model with data augmentation
-    train_generator = data_augmentation.flow(X_train, y_train, batch_size=32)
-    validation_generator = ImageDataGenerator(preprocessing_function=tf.keras.applications.mobilenet_v2.preprocess_input).flow(X_test, y_test, batch_size=32)
-    
     model.fit(
         train_generator,
         steps_per_epoch=len(X_train) // 32,
         epochs=10,
-        validation_data=validation_generator,
-        validation_steps=len(X_test) // 32
+        validation_data=test_generator,
+        validation_steps=np.ceil(len(X_test) / 32)  # Ensure all test samples are evaluated
     )
 
-    # Evaluate the model
-    test_loss, test_acc = model.evaluate(X_test, y_test)
+    # Evaluate the model using the test generator for consistent preprocessing
+    test_loss, test_acc = model.evaluate(test_generator, steps=np.ceil(len(X_test) / 32))
     print(f"Test Accuracy: {test_acc:.4f}")
 
     # Save the model if test accuracy is 80% or higher
