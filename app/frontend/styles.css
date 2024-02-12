@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+h1 {
+    color: #333;
+    margin-top: 50px;
+}
+
+#content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+button {
+    margin: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#prediction-result p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+#dog-image {
+    max-width: 100%;
+    height: auto;
+}
+
+#image-name, #upload-status {
+    color: #555;
+    font-style: italic;
+    min-height: 20px; /* Reserve space for one line of text */
+    visibility: hidden; /* Use visibility instead of 'hidden' attribute to occupy space */
+}
+
+/* When the message is displayed, change visibility */
+#image-name.visible, #upload-status.visible {
+    visibility: visible;
+}

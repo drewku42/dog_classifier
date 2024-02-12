@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Dog Breed Classifier</title>
+</head>
+<body>
+    <h1>Dog Breed Classifier</h1>
+    <div id="content">
+        <button id="select-image-btn">Select Image</button>
+        <input type="file" id="image-input" name="dogImage" hidden>
+        <button id="upload-image-btn">Upload Image</button>
+        <p id="image-name" class="status-text"></p> <!-- Added class for status text -->
+        <p id="upload-status" class="status-text"></p> <!-- Added class for status text -->
+        <div id="prediction-result" class="prediction-container"> <!-- Added class for prediction container -->
+            <p id="breed-name" class="breed-text"></p> <!-- Added class for breed text -->
+            <img id="dog-image" src="" alt="Uploaded dog image" class="dog-image-preview"> <!-- Added class for image preview -->
+            <p id="prediction-text" class="prediction-text"></p> <!-- Added class for prediction text -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

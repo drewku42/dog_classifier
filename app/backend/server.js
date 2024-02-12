@@ -1,18 +1,32 @@
-// Import express
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
 
-// Create a new express application
 const app = express();
+const port = 3000;
 
-// Define a port to listen for incoming requests
-const PORT = process.env.PORT || 3000;
-
-// Define a route for HTTP GET requests to the root '/'
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
+// Configure multer for image upload
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, path.join(__dirname, 'uploads')); // Set the destination folder for uploaded files
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Use the file's original extension
+  }
 });
 
-// Make the server listen on the defined PORT
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const upload = multer({ storage: storage });
+
+// Serve static files from 'frontend' directory
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
+
+// Route for file upload
+app.post('/upload', upload.single('dogImage'), (req, res) => {
+  // Handle the uploaded file
+  console.log(req.file); // You can see the uploaded file details
+  res.send('File uploaded successfully');
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
