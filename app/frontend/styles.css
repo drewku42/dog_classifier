@@ -40,6 +40,14 @@ button:hover {
     height: auto;
 }
 
+#dog-image, #prediction-result {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
 #image-name, #upload-status {
     color: #555;
     font-style: italic;

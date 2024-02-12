@@ -15,7 +15,7 @@ document.getElementById('image-input').addEventListener('change', function(event
         reader.onload = function(e) {
             const dogImageElement = document.getElementById('dog-image');
             dogImageElement.src = e.target.result;
-            dogImageElement.classList.add('visible');
+            dogImageElement.classList.add('visible'); // This will now correctly show the image
         };
         reader.readAsDataURL(file);
     }
