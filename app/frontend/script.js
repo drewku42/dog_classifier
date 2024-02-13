@@ -1,25 +1,24 @@
 document.getElementById('select-image-btn').addEventListener('click', function() {
-    document.getElementById('image-input').click();
+    document.getElementById('image-input').click(); // Triggers file input click
 });
 
 document.getElementById('image-input').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {
-        // Display the file name
         const imageNameElement = document.getElementById('image-name');
         imageNameElement.textContent = `Selected: ${file.name}`;
-        imageNameElement.classList.add('visible');
-        
-        // Optionally, display the image preview
+        imageNameElement.classList.add('visible'); // Makes the selected image name visible
+
         const reader = new FileReader();
         reader.onload = function(e) {
             const dogImageElement = document.getElementById('dog-image');
             dogImageElement.src = e.target.result;
-            dogImageElement.classList.add('visible'); // This will now correctly show the image
+            dogImageElement.removeAttribute('hidden'); // Makes the image visible
         };
         reader.readAsDataURL(file);
     }
 });
+
 
 document.getElementById('upload-image-btn').addEventListener('click', function() {
     const input = document.getElementById('image-input');
@@ -46,6 +45,7 @@ document.getElementById('upload-image-btn').addEventListener('click', function()
         const breedNameElement = document.getElementById('breed-name');
         const predictionTextElement = document.getElementById('prediction-text');
         const predictionResultElement = document.getElementById('prediction-result');
+        const uploadStatusElement = document.getElementById('upload-status');
 
         breedNameElement.textContent = data.breed;
         predictionTextElement.textContent = `This dog is ${data.probability}% likely to be a ${data.breed}.`;
@@ -53,6 +53,10 @@ document.getElementById('upload-image-btn').addEventListener('click', function()
 
         // Hide the loading message
         uploadStatusElement.classList.remove('visible');
+
+        // Update the upload status to indicate success
+        uploadStatusElement.textContent = 'Image uploaded successfully!';
+        uploadStatusElement.classList.add('visible');
     })
     .catch(error => {
         console.error('Error:', error);

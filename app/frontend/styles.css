@@ -33,15 +33,16 @@ button:hover {
 #prediction-result p {
     margin: 10px 0;
     font-size: 18px;
+    visibility: hidden;
 }
 
 #dog-image {
-    max-width: 100%;
-    height: auto;
-}
-
-#dog-image, #prediction-result {
-    visibility: hidden;
+    max-width: 90%; /* or a specific pixel value like 600px */
+    max-height: 400px; /* Adjust the maximum height as needed */
+    height: auto; /* Maintain aspect ratio */
+    /*display: block; /* Allows margin: auto to center the image horizontally */
+    margin: 20px auto; /* Adds some space above and below the image, and centers it horizontally */
+    border-radius: 10px; /* Optional: Adds rounded corners to the image */
 }
 
 .visible {
