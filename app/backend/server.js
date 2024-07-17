@@ -25,11 +25,6 @@ app.use(express.static(path.join(__dirname, '..', 'frontend')));
 app.post('/upload', upload.single('dogImage'), (req, res) => {
   // Handle the uploaded file
   console.log(req.file); // You can see the uploaded file details
-  
-  // TODO: Add your image processing and breed classification logic here
-  // For now, we'll send back a mock response
-  const mockBreed = 'Labrador Retriever';
-  const mockProbability = 95;
 
   // Send back a JSON response
   res.json({ breed: mockBreed, probability: mockProbability });
